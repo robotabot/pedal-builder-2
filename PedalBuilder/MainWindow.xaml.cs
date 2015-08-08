@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -75,25 +77,18 @@ namespace PedalBuilder
 
         private void pedalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            if (pedalDataGrid.SelectedItem.GetType().FullName != "MS.Internal.NamedObject")
+            if (pedalDataGrid.SelectedValue != null && pedalDataGrid.SelectedValue.ToString() != "{NewItemPlaceholder}")
             {
-                _selectedPedal = (Pedal)(pedalDataGrid.SelectedItem);
+                _selectedPedal = (Pedal)(pedalDataGrid.SelectedValue);
                 lblPedalName.Content = _selectedPedal.Name;
 
-                foreach (Part part in partDataGrid.Items)
-                {
-                    if (part.Component.Price != null) pedalCost += part.Component.Price.Value;
-                }
-
-                lblPedalCost.Content = pedalCost.ToString(CultureInfo.InvariantCulture);
-
+                updatePedalCost();
             }
         }
 
         private void btnAddComponentToPedal_Click(object sender, RoutedEventArgs e)
         {
-            if (componentDataGrid.SelectedItem.GetType().FullName != "MS.Internal.NamedObject" && _selectedPedal != null && txtPartName.Text.Length > 0)
+            if (componentDataGrid.SelectedValue != null && componentDataGrid.SelectedValue.ToString() != "{NewItemPlaceholder}" && _selectedPedal != null && txtPartName.Text.Length > 0)
             {
                 _selectedComponent = (Component)(componentDataGrid.SelectedItem);
                 Part part = new Part();
@@ -102,6 +97,56 @@ namespace PedalBuilder
                 part.Pedal_PedalId = _selectedPedal.PedalId;
                 _context.Parts.Add(part);
                 _context.SaveChanges();
+                partDataGrid.Items.Refresh();
+                updatePedalCost();
+            }
+        }
+
+        private void updatePedalCost()
+        {
+            pedalCost = (decimal) 0.00;
+            foreach (Part part in partDataGrid.Items)
+            {
+                if (part.Component.Price != null) pedalCost += part.Component.Price.Value;
+            }
+            
+            lblPedalCost.Content = pedalCost.ToString("#,#.##");
+        }
+
+        private void btnDeletePart_Click(object sender, RoutedEventArgs e)
+        {
+            if (partDataGrid.SelectedValue != null)
+            {
+                var part = (Part) (partDataGrid.SelectedItem);
+                _context.Parts.Remove(part);
+                _context.SaveChanges();
+                partDataGrid.Items.Refresh();
+                updatePedalCost();
+            }
+        }
+
+        private void txtSearchComponents_TextChanged(object sender, TextChangedEventArgs e)
+        {
+                string search = txtSearchComponents.Text.ToLower();
+                ICollectionView collection = CollectionViewSource.GetDefaultView(componentDataGrid.ItemsSource);
+            if (search == "")
+            {
+                collection.Filter = null;
+            }
+            else
+            {
+                collection.Filter = o =>
+                {
+                    Component c = o as Component;
+                    if (c.Value.ToLower().Contains(search))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
         }
     }

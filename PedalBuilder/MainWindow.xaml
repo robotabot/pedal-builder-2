@@ -28,12 +28,12 @@
             </TabItem>
             <TabItem Header="Components">
                 <Grid Background="#FFE5E5E5" Margin="0,0,-4,-1" DataContext="{StaticResource componentViewSource}">
-                    <DataGrid x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,41,480,120" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal">
+                    <DataGrid x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,36,480,125" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="componentIdColumn" Binding="{Binding ComponentId}" Header="Component Id" Width="SizeToHeader" Visibility="Hidden"/>
                             <DataGridTextColumn x:Name="typeColumn" Binding="{Binding Type}" Header="Type" Width="75" SortDirection="Ascending"/>
                             <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Value}" Header="Value" Width="100" SortDirection="Ascending"/>
-                            <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price, StringFormat={}{0:n3}}" Header="Price" Width="50"/>
                             <DataGridTextColumn x:Name="notesColumn1" Binding="{Binding Notes}" Header="Notes" Width="150"/>
                             <DataGridTextColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
                         </DataGrid.Columns>
@@ -41,8 +41,8 @@
                     <Button x:Name="btnUpdateComponent" Content="UPDATE COMPONENTS" HorizontalAlignment="Left" Margin="10,633,0,0" VerticalAlignment="Top" Width="168" Height="44" BorderBrush="#FF0056BD" Background="White" Click="btnUpdateComponent_Click"/>
                     <Label x:Name="lblPedalName" Content="Name" HorizontalAlignment="Left" Margin="849,10,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="lblPedalCostStatic" Content="Cost" HorizontalAlignment="Left" Margin="1146,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblPedalCost" Content="0.00" HorizontalAlignment="Left" Margin="1203,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,-0.865" Width="46"/>
-                    <DataGrid x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,41,75,120" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True">
+                    <Label x:Name="lblPedalCost" Content="0.00" HorizontalAlignment="Left" Margin="1185,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,-0.865" Width="64"/>
+                    <DataGrid x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,36,75,125" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="component_ComponentIdColumn" Binding="{Binding Component_ComponentId}" Header="Component Component Id" Width="SizeToHeader" Visibility="Hidden"/>
                             <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader" Visibility="Hidden"/>
@@ -54,7 +54,9 @@
                     <Label x:Name="lblPartName" Content="Part Name" HorizontalAlignment="Left" Margin="564,642,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtPartName" HorizontalAlignment="Left" Height="22" Margin="635,646,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" BorderBrush="#FF0056BD" SpellCheck.IsEnabled="True"/>
                     <Button x:Name="btnAddComponentToPedal" Content="ADD TO PEDAL" HorizontalAlignment="Left" Margin="723,639,0,0" VerticalAlignment="Top" Width="121" Height="32" Background="White" BorderBrush="#FF0056BD" Click="btnAddComponentToPedal_Click"/>
-                    <Button x:Name="btnUpdateParts" Content="UPDATE PARTS" HorizontalAlignment="Left" Margin="1140,633,0,0" VerticalAlignment="Top" Width="109" Height="44" BorderBrush="#FF0056BD" Background="White"/>
+                    <Button x:Name="btnDeletePart" Content="DELETE PART" HorizontalAlignment="Left" Margin="1140,633,0,0" VerticalAlignment="Top" Width="109" Height="44" BorderBrush="#FF0056BD" Background="White" Click="btnDeletePart_Click"/>
+                    <TextBox x:Name="txtSearchComponents" HorizontalAlignment="Left" Height="22" Margin="353,646,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" TextChanged="txtSearchComponents_TextChanged"/>
+                    <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="303,642,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
