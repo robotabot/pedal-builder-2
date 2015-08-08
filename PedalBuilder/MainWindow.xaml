@@ -12,10 +12,25 @@
         <CollectionViewSource x:Key="partViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Part}, CreateList=True}"/>
     </Window.Resources>
     <Grid>
-        <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="1326"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="775" Margin="0,20,0,0" VerticalAlignment="Top" Width="1326">
-            <TabItem Header="Pedals">
-                <Grid Background="#FFE5E5E5" Margin="0,0,-3,-3" DataContext="{StaticResource pedalViewSource}">
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="1326">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF3A3F44" Offset="0.6"/>
+                    <GradientStop Color="#FF484E55" Offset="1"/>
+                    <GradientStop Color="#FF313539"/>
+                </LinearGradientBrush>
+            </Menu.Background>
+        </Menu>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="775" Margin="0,20,0,0" VerticalAlignment="Top" Width="1326" Background="#FF272B30">
+            <TabItem Header="Pedals" BorderBrush="Black" Foreground="#FFC8C8C8">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FF70787D" Offset="0"/>
+                        <GradientStop Color="#FF272B30" Offset="1"/>
+                        <GradientStop Color="#FF7A8288" Offset="0.6"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FF272B30" Margin="0,0,-3,-3" DataContext="{StaticResource pedalViewSource}">
                     <DataGrid x:Name="pedalDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,10,78" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" SelectionChanged="pedalDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="200"/>
@@ -26,8 +41,15 @@
                     <Button x:Name="btnPedalUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="284,677,0,0" VerticalAlignment="Top" Width="103" Height="33" Background="White" BorderBrush="#FF0056BD" Click="btnPedalUpdate_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Components">
-                <Grid Background="#FFE5E5E5" Margin="0,0,-4,-1" DataContext="{StaticResource componentViewSource}">
+            <TabItem Header="Components" Foreground="#FFC8C8C8">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FF70787D" Offset="0"/>
+                        <GradientStop Color="#FF272B30" Offset="1"/>
+                        <GradientStop Color="#FF7A8288" Offset="0.6"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FF272B30" Margin="0,0,-4,-1" DataContext="{StaticResource componentViewSource}">
                     <DataGrid x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,36,480,125" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="componentIdColumn" Binding="{Binding ComponentId}" Header="Component Id" Width="SizeToHeader" Visibility="Hidden"/>
@@ -39,9 +61,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnUpdateComponent" Content="UPDATE COMPONENTS" HorizontalAlignment="Left" Margin="10,633,0,0" VerticalAlignment="Top" Width="168" Height="44" BorderBrush="#FF0056BD" Background="White" Click="btnUpdateComponent_Click"/>
-                    <Label x:Name="lblPedalName" Content="Name" HorizontalAlignment="Left" Margin="849,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblPedalCostStatic" Content="Cost" HorizontalAlignment="Left" Margin="1146,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblPedalCost" Content="0.00" HorizontalAlignment="Left" Margin="1185,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,-0.865" Width="64"/>
+                    <Label x:Name="lblPedalName" Content="Name" HorizontalAlignment="Left" Margin="849,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
+                    <Label x:Name="lblPedalCostStatic" Content="Cost" HorizontalAlignment="Left" Margin="1146,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
+                    <Label x:Name="lblPedalCost" Content="0.00" HorizontalAlignment="Left" Margin="1185,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,-0.865" Width="64" Foreground="#FFC8C8C8"/>
                     <DataGrid x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,36,75,125" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="component_ComponentIdColumn" Binding="{Binding Component_ComponentId}" Header="Component Component Id" Width="SizeToHeader" Visibility="Hidden"/>
@@ -51,12 +73,12 @@
                             <DataGridTextColumn x:Name="partComponentValueColumn" Binding="{Binding Component.Value}" Header="Value" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Label x:Name="lblPartName" Content="Part Name" HorizontalAlignment="Left" Margin="564,642,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblPartName" Content="Part Name" HorizontalAlignment="Left" Margin="564,642,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
                     <TextBox x:Name="txtPartName" HorizontalAlignment="Left" Height="22" Margin="635,646,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" BorderBrush="#FF0056BD" SpellCheck.IsEnabled="True"/>
                     <Button x:Name="btnAddComponentToPedal" Content="ADD TO PEDAL" HorizontalAlignment="Left" Margin="723,639,0,0" VerticalAlignment="Top" Width="121" Height="32" Background="White" BorderBrush="#FF0056BD" Click="btnAddComponentToPedal_Click"/>
                     <Button x:Name="btnDeletePart" Content="DELETE PART" HorizontalAlignment="Left" Margin="1140,633,0,0" VerticalAlignment="Top" Width="109" Height="44" BorderBrush="#FF0056BD" Background="White" Click="btnDeletePart_Click"/>
                     <TextBox x:Name="txtSearchComponents" HorizontalAlignment="Left" Height="22" Margin="353,646,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" TextChanged="txtSearchComponents_TextChanged"/>
-                    <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="303,642,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="303,642,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
                 </Grid>
             </TabItem>
         </TabControl>
