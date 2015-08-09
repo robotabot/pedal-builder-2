@@ -93,21 +93,21 @@
                         <GradientStop Color="#FF7A8288" Offset="0.6"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid x:Name="Orders" Background="#FFFDFDFD">
-                    <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="605" Width="1096" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
+                <Grid x:Name="Orders" Background="#FF272B30">
+                    <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="605" Width="1300" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Ordered}" ClipboardContentBinding="{x:Null}" Header="Ordered"/>
                             <DataGridTextColumn Binding="{Binding Type}" ClipboardContentBinding="{x:Null}" Header="Type" FontSize="16" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Value}" ClipboardContentBinding="{x:Null}" Header="Value" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Quantity}" ClipboardContentBinding="{x:Null}" Header="Quantity" Width="Auto"/>
-                            <DataGridTextColumn Binding="{Binding Notes}" ClipboardContentBinding="{x:Null}" Header="Notes" Width="300"/>
+                            <DataGridTextColumn Binding="{Binding Notes}" ClipboardContentBinding="{x:Null}" Header="Notes" Width="350"/>
                             <DataGridHyperlinkColumn Binding="{Binding Url}" ContentBinding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Url" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Label x:Name="lblOrderPedalsStatic" Content="Pedals Being Ordered" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblOrderPedalsQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblOrderTotalCostStatic" Content="Total Cost" HorizontalAlignment="Left" Margin="252,10,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblOrderTotalCost" Content="0.00" HorizontalAlignment="Left" Margin="320,10,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblOrderPedalsStatic" Content="Pedals Being Ordered" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
+                    <Label x:Name="lblOrderPedalsQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
+                    <Label x:Name="lblOrderTotalCostStatic" Content="Total Cost" HorizontalAlignment="Left" Margin="252,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
+                    <Label x:Name="lblOrderTotalCost" Content="0.00" HorizontalAlignment="Left" Margin="320,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
                 </Grid>
             </TabItem>
         </TabControl>
