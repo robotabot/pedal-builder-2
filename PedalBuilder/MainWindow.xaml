@@ -38,7 +38,10 @@
                             <DataGridTextColumn x:Name="pedalIdColumn" Binding="{Binding PedalId}" Header="Pedal Id" Width="SizeToHeader" Visibility="Hidden"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btnPedalUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="284,677,0,0" VerticalAlignment="Top" Width="103" Height="33" Background="White" BorderBrush="#FF0056BD" Click="btnPedalUpdate_Click"/>
+                    <Button x:Name="btnPedalUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="10,677,0,0" VerticalAlignment="Top" Width="103" Height="33" Background="White" BorderBrush="#FF0056BD" Click="btnPedalUpdate_Click"/>
+                    <TextBox x:Name="txtPedalBuildQuantity" HorizontalAlignment="Left" Height="23" Margin="331,683,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="lblQuantityToBuild" Content="Quantity To Build" HorizontalAlignment="Left" Margin="224,680,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
+                    <Button x:Name="btnAddPedalToOrder" Content="ADD PEDAL TO ORDER" HorizontalAlignment="Left" Margin="456,677,0,0" VerticalAlignment="Top" Width="175" Height="33" Background="White" Click="btnAddPedalToOrder_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Components" Foreground="#FFC8C8C8">
@@ -80,6 +83,16 @@
                     <TextBox x:Name="txtSearchComponents" HorizontalAlignment="Left" Height="22" Margin="353,646,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" TextChanged="txtSearchComponents_TextChanged"/>
                     <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="303,642,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
                 </Grid>
+            </TabItem>
+            <TabItem Header="Order" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="55">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FF70787D" Offset="0"/>
+                        <GradientStop Color="#FF272B30" Offset="1"/>
+                        <GradientStop Color="#FF7A8288" Offset="0.6"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid x:Name="Orders" Background="#FFFDFDFD"/>
             </TabItem>
         </TabControl>
 

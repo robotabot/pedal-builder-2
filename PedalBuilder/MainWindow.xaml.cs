@@ -27,7 +27,8 @@ namespace PedalBuilder
         private PedalsContext _context = new PedalsContext();
         private decimal pedalCost = new decimal(0.00);
         private Component _selectedComponent = new Component();
-        private Pedal _selectedPedal = new Pedal();
+        private Order order = new Order();
+        private Pedal _selectedPedal;
         public MainWindow()
         {
             InitializeComponent();
@@ -127,8 +128,8 @@ namespace PedalBuilder
 
         private void txtSearchComponents_TextChanged(object sender, TextChangedEventArgs e)
         {
-                string search = txtSearchComponents.Text.ToLower();
-                ICollectionView collection = CollectionViewSource.GetDefaultView(componentDataGrid.ItemsSource);
+            string search = txtSearchComponents.Text.ToLower();
+            ICollectionView collection = CollectionViewSource.GetDefaultView(componentDataGrid.ItemsSource);
             if (search == "")
             {
                 collection.Filter = null;
@@ -147,6 +148,28 @@ namespace PedalBuilder
                         return false;
                     }
                 };
+            }
+        }
+
+        private void btnAddPedalToOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedPedal != null)
+            {
+                short quantity;
+                bool result = short.TryParse(txtPedalBuildQuantity.Text, out quantity);
+
+                if (result)
+                {
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        order.Pedals.Add(_selectedPedal);
+
+                        foreach (Part part in _selectedPedal.Parts)
+                        {
+                            order.Components.Add(part.Component);
+                        }
+                    }
+                }
             }
         }
     }

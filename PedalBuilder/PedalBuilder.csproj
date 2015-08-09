@@ -83,6 +83,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Order.cs" />
     <Compile Include="Part.cs">
       <DependentUpon>Pedal.tt</DependentUpon>
     </Compile>
