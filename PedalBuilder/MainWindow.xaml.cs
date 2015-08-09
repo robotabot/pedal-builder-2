@@ -25,6 +25,7 @@ namespace PedalBuilder
     public partial class MainWindow : Window
     {
         private PedalsContext _context = new PedalsContext();
+        private List<dynamic> groupedList = new List<dynamic>(); 
         private decimal pedalCost = new decimal(0.00);
         private Component _selectedComponent = new Component();
         private Order order = new Order();
@@ -34,24 +35,30 @@ namespace PedalBuilder
             InitializeComponent();
         }
 
+        //TODO Change component datagrid url column to hyerlink
+
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            System.Windows.Data.CollectionViewSource pedalViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("pedalViewSource")));
+            CollectionViewSource pedalViewSource = ((CollectionViewSource)(this.FindResource("pedalViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             _context.Pedals.Load();
             pedalViewSource.Source = _context.Pedals.Local;
 
-            System.Windows.Data.CollectionViewSource componentViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("componentViewSource")));
+            CollectionViewSource componentViewSource = ((CollectionViewSource)(this.FindResource("componentViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             _context.Components.Load();
             componentViewSource.Source = _context.Components.Local;
 
             
-            System.Windows.Data.CollectionViewSource partViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("partViewSource")));
+            CollectionViewSource partViewSource = ((CollectionViewSource)(this.FindResource("partViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             _context.Parts.Load();
             partViewSource.Source = _context.Parts.Local;
+
+            CollectionViewSource orderViewSource = ((CollectionViewSource) (this.FindResource("orderViewSource")));
+            orderViewSource.Source = groupedList;
         }
 
         private void btnPedalUpdate_Click(object sender, RoutedEventArgs e)
@@ -170,6 +177,27 @@ namespace PedalBuilder
                         }
                     }
                 }
+
+                fillOrderListAndUpdateOrderDataGrid();
+            }
+        }
+
+        private void fillOrderListAndUpdateOrderDataGrid()
+        {
+            var tempList = order.Components.GroupBy(c => c.ComponentId)
+                .Select(c => new
+                {
+                    Checked = false,
+                    Quantity = c.Count(),
+                    Type = c.First().Type,
+                    Value = c.First().Value,
+                    Notes = c.First().Notes,
+                    Url = c.First().Url
+                });
+
+            foreach (var item in tempList)
+            {
+                groupedList.Add(item);
             }
         }
     }
