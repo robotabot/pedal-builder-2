@@ -21,6 +21,9 @@
                     <GradientStop Color="#FF313539"/>
                 </LinearGradientBrush>
             </Menu.Background>
+            <MenuItem x:Name="mnitmAutofill" Header="Autofill" Foreground="White" Background="#FF272B30">
+                <MenuItem x:Name="mnitmFillResistors" Header="Fill Resistors" HorizontalAlignment="Left" Width="157" Background="#FF272B30" BorderBrush="#FF272B30" Margin="0,0,-17,0" Click="mnitmFillResistors_Click"/>
+            </MenuItem>
         </Menu>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="775" Margin="0,20,0,0" VerticalAlignment="Top" Width="1326" Background="#FF272B30">
             <TabItem Header="Pedals" BorderBrush="Black" Foreground="#FFC8C8C8">

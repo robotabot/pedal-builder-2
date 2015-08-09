@@ -204,5 +204,17 @@ namespace PedalBuilder
             lblOrderTotalCost.Content = totalCost.ToString("#,#.##");
         }
 
+        private void mnitmFillResistors_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result =
+                MessageBox.Show(
+                    "Add many common resistors to the components?\nResistors will only have Type and Value specified.",
+                    "Autofill Resistors", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                
+            }
+        }
     }
 }
