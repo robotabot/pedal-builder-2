@@ -61,7 +61,7 @@
                             <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Value}" Header="Value" Width="100" SortDirection="Ascending"/>
                             <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price, StringFormat={}{0:n3}}" Header="Price" Width="50"/>
                             <DataGridTextColumn x:Name="notesColumn1" Binding="{Binding Notes}" Header="Notes" Width="250"/>
-                            <DataGridTextColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
+                            <DataGridHyperlinkColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnUpdateComponent" Content="UPDATE COMPONENTS" HorizontalAlignment="Left" Margin="10,633,0,0" VerticalAlignment="Top" Width="168" Height="44" BorderBrush="#FF0056BD" Background="White" Click="btnUpdateComponent_Click"/>
@@ -94,7 +94,7 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid x:Name="Orders" Background="#FFFDFDFD">
-                    <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="605" Width="1096" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
+                    <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="605" Width="1096" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Ordered}" ClipboardContentBinding="{x:Null}" Header="Ordered"/>
                             <DataGridTextColumn Binding="{Binding Type}" ClipboardContentBinding="{x:Null}" Header="Type" FontSize="16" Width="100"/>
@@ -104,6 +104,10 @@
                             <DataGridHyperlinkColumn Binding="{Binding Url}" ContentBinding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Url" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Label x:Name="lblOrderPedalsStatic" Content="Pedals Being Ordered" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblOrderPedalsQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblOrderTotalCostStatic" Content="Total Cost" HorizontalAlignment="Left" Margin="252,10,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblOrderTotalCost" Content="0.00" HorizontalAlignment="Left" Margin="320,10,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>

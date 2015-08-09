@@ -30,13 +30,11 @@ namespace PedalBuilder
         private Component _selectedComponent = new Component();
         private Order order = new Order();
         private Pedal _selectedPedal;
+        private decimal totalCost = new decimal(0.00);
         public MainWindow()
         {
             InitializeComponent();
         }
-
-        //TODO Change component datagrid url column to hyerlink
-
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -107,6 +105,7 @@ namespace PedalBuilder
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
                 updatePedalCost();
+                txtPartName.Clear();
             }
         }
 
@@ -160,30 +159,29 @@ namespace PedalBuilder
 
         private void btnAddPedalToOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedPedal != null)
+            short quantity;
+            bool result = short.TryParse(txtPedalBuildQuantity.Text, out quantity);
+
+            if (_selectedPedal != null && result)
             {
-                short quantity;
-                bool result = short.TryParse(txtPedalBuildQuantity.Text, out quantity);
-
-                if (result)
+                for (int i = 0; i < quantity; i++)
                 {
-                    for (int i = 0; i < quantity; i++)
-                    {
-                        order.Pedals.Add(_selectedPedal);
+                    order.Pedals.Add(_selectedPedal);
 
-                        foreach (Part part in _selectedPedal.Parts)
-                        {
-                            order.Components.Add(part.Component);
-                        }
+                    foreach (Part part in _selectedPedal.Parts)
+                    {
+                        order.Components.Add(part.Component);
                     }
                 }
 
+                txtPedalBuildQuantity.Clear();
                 fillOrderListAndUpdateOrderDataGrid();
             }
         }
 
         private void fillOrderListAndUpdateOrderDataGrid()
         {
+            totalCost = (decimal) 0.00;
             var tempList = order.Components.GroupBy(c => c.ComponentId)
                 .Select(c => new
                 {
@@ -192,13 +190,19 @@ namespace PedalBuilder
                     Type = c.First().Type,
                     Value = c.First().Value,
                     Notes = c.First().Notes,
-                    Url = c.First().Url
+                    Url = c.First().Url,
+                    Price = c.First().Price
                 });
 
             foreach (var item in tempList)
             {
                 groupedList.Add(item);
+                totalCost += (item.Price.Value * item.Quantity);
             }
+
+            lblOrderPedalsQuantity.Content = order.Pedals.Count;
+            lblOrderTotalCost.Content = totalCost.ToString("#,#.##");
         }
+
     }
 }
