@@ -34,7 +34,9 @@
           <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_PartComponent">
-          <End Role="Components" Type="Self.Components" Multiplicity="1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Parts" Type="Self.Parts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Components">
@@ -46,7 +48,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PartPedal">
-          <End Role="Pedals" Type="Self.Pedals" Multiplicity="1" />
+          <End Role="Pedals" Type="Self.Pedals" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Parts" Type="Self.Parts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pedals">
@@ -108,8 +112,11 @@
           <NavigationProperty Name="Parts" Relationship="Self.FK_PartPedal" FromRole="Pedals" ToRole="Parts" />
         </EntityType>
         <Association Name="FK_PartComponent">
-          <End Role="Components" Type="Self.Component" Multiplicity="1" />
-          <End Role="Parts" Type="Self.Part" Multiplicity="*" />
+          <End Role="Components" Type="Self.Component" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Parts" Type="Self.Part" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="Components">
               <PropertyRef Name="ComponentId" />
@@ -120,7 +127,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PartPedal">
-          <End Role="Pedals" Type="Self.Pedal" Multiplicity="1" />
+          <End Role="Pedals" Type="Self.Pedal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Parts" Type="Self.Part" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pedals">

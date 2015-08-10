@@ -72,11 +72,6 @@ namespace PedalBuilder
 
         private void btnUpdateComponent_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var component in _context.Components.Local.ToList().Where(component => component.Type == null))
-            {
-                _context.Components.Remove(component);
-            }
-
             _context.SaveChanges();
             componentDataGrid.Items.Refresh();
         }
@@ -218,5 +213,6 @@ namespace PedalBuilder
                 componentDataGrid.Items.Refresh();
             }
         }
+
     }
 }

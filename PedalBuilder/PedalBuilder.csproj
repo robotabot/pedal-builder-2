@@ -66,6 +66,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Component.cs">
+      <DependentUpon>PedalsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Part.cs">
+      <DependentUpon>PedalsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pedal.cs">
+      <DependentUpon>PedalsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedalsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PedalsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedalsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PedalsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedalsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PedalsModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="SeedDatabase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -75,9 +99,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Component.cs">
-      <DependentUpon>Pedal.tt</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -85,27 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Order.cs" />
-    <Compile Include="Part.cs">
-      <DependentUpon>Pedal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Pedal.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Pedal.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Pedal.cs">
-      <DependentUpon>Pedal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Pedal.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Pedal.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Pedal1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Pedal.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -123,13 +123,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Pedal.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Pedal.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="packages.config" />
-    <None Include="Pedal.edmx.diagram">
-      <DependentUpon>Pedal.edmx</DependentUpon>
+    <EntityDeploy Include="PedalsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PedalsModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="PedalsModel.edmx.diagram">
+      <DependentUpon>PedalsModel.edmx</DependentUpon>
     </None>
     <None Include="Properties\DataSources\Component.datasource" />
     <None Include="Properties\DataSources\Part.datasource" />
@@ -144,19 +144,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pedal.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Pedal.edmx</DependentUpon>
-      <LastGenOutput>Pedal.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Pedal.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Pedal.edmx</DependentUpon>
-      <LastGenOutput>Pedal1.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="PedalsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PedalsModel.edmx</DependentUpon>
+      <LastGenOutput>PedalsModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="PedalsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PedalsModel.edmx</DependentUpon>
+      <LastGenOutput>PedalsModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
