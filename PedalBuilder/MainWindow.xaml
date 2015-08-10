@@ -64,7 +64,7 @@
                             <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Value}" Header="Value" Width="100" SortDirection="Ascending"/>
                             <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price, StringFormat={}{0:n3}}" Header="Price" Width="50"/>
                             <DataGridTextColumn x:Name="notesColumn1" Binding="{Binding Notes}" Header="Notes" Width="250"/>
-                            <DataGridHyperlinkColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
+                            <DataGridTextColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnUpdateComponent" Content="UPDATE COMPONENTS" HorizontalAlignment="Left" Margin="10,633,0,0" VerticalAlignment="Top" Width="168" Height="44" BorderBrush="#FF0056BD" Background="White" Click="btnUpdateComponent_Click"/>
@@ -104,7 +104,7 @@
                             <DataGridTextColumn Binding="{Binding Value}" ClipboardContentBinding="{x:Null}" Header="Value" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Quantity}" ClipboardContentBinding="{x:Null}" Header="Quantity" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding Notes}" ClipboardContentBinding="{x:Null}" Header="Notes" Width="350"/>
-                            <DataGridHyperlinkColumn Binding="{Binding Url}" ContentBinding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Url" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Url}" Header="Url" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="lblOrderPedalsStatic" Content="Pedals Being Ordered" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>

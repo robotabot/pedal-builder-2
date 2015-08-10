@@ -12,8 +12,10 @@ namespace PedalBuilder
 {
     public class SeedDatabase
     {
-        private static Component resistor = new Component();
-        private static string[] resistors = new string[]
+        private static PedalsContext _context = new PedalsContext();
+        private static Component resistor;
+        private static List<Component> resistorList = new List<Component>(); 
+        private static string[] resistorValues = new string[]
         {
             "0",
             "1",
@@ -135,23 +137,19 @@ namespace PedalBuilder
             "2.7M"
         };
 
-        public static void SeedResistors(PedalsContext _context)
+        public static void SeedResistors()
         {
-            resistor.Type = "Resistor";
-
-            //foreach (string r in resistors)
-            //{
-            //    resistor.Value = r;
-            //    resistor.Price = (decimal?) 0.00;
-            //    _context.Components.Add(resistor);
-                
-            //}
-
-            resistor.Value = "1";
-            resistor.Price = (decimal?) 0.00;
-
-            _context.Components.Add(resistor);
+            foreach (string r in resistorValues)
+            {
+                resistor = new Component();
+                resistor.Type = "Resistor";
+                resistor.Price = (decimal?)0.00;
+                resistor.Value = r;
+                resistorList.Add(resistor);
+            }
+            _context.Components.AddRange(resistorList);
             _context.SaveChanges();
+            _context.Dispose();
         }
 
     }

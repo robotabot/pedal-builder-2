@@ -208,13 +208,14 @@ namespace PedalBuilder
         {
             MessageBoxResult result =
                 MessageBox.Show(
-                    "Add many common resistors to the component list?\nResistors will only have Type and Value specified.",
+                    "Add many common resistors to the component list?\nResistors will have Type, Value, and Price of 0.00 specified.",
                     "Autofill Resistors", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
-                SeedDatabase.SeedResistors(_context);
-                
+                SeedDatabase.SeedResistors();
+                _context.Components.Load();
+                componentDataGrid.Items.Refresh();
             }
         }
     }
