@@ -16,13 +16,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace PedalBuilder
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         private PedalsContext _context = new PedalsContext();
         private List<dynamic> groupedList = new List<dynamic>(); 
@@ -199,7 +200,8 @@ namespace PedalBuilder
             lblOrderTotalCost.Content = totalCost.ToString("#,#.##");
         }
 
-        private void mnitmFillResistors_Click(object sender, RoutedEventArgs e)
+        //TODO Use Mahapps dialog box, move into SeedDatabase class, add progress dialog.
+        private void btnFillResistorsClick(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result =
                 MessageBox.Show(
@@ -213,6 +215,5 @@ namespace PedalBuilder
                 componentDataGrid.Items.Refresh();
             }
         }
-
     }
 }
