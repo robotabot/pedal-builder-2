@@ -58,6 +58,8 @@ namespace PedalBuilder
 
             CollectionViewSource orderViewSource = ((CollectionViewSource) (this.FindResource("orderViewSource")));
             orderViewSource.Source = groupedList;
+
+            lstPedals.ItemsSource = order.Pedals;
         }
 
         private void btnPedalUpdate_Click(object sender, RoutedEventArgs e)
@@ -163,11 +165,6 @@ namespace PedalBuilder
                 for (int i = 0; i < quantity; i++)
                 {
                     order.Pedals.Add(_selectedPedal);
-
-                    foreach (Part part in _selectedPedal.Parts)
-                    {
-                        order.Components.Add(part.Component);
-                    }
                 }
 
                 txtPedalBuildQuantity.Clear();
@@ -177,6 +174,17 @@ namespace PedalBuilder
 
         private void fillOrderListAndUpdateOrderDataGrid()
         {
+            order.Components.Clear();
+            groupedList.Clear();
+
+            foreach (Pedal pedal in order.Pedals)
+            {
+                foreach (Part part in pedal.Parts)
+                {
+                    order.Components.Add(part.Component);
+                }
+            }
+
             totalCost = (decimal) 0.00;
             var tempList = order.Components.GroupBy(c => c.ComponentId)
                 .Select(c => new
@@ -198,6 +206,8 @@ namespace PedalBuilder
 
             lblOrderPedalsQuantity.Content = order.Pedals.Count;
             lblOrderTotalCost.Content = totalCost.ToString("#,#.##");
+            lstPedals.Items.Refresh();
+            orderDataGrid.Items.Refresh();
         }
 
         //TODO Use Mahapps dialog box, move into SeedDatabase class, add progress dialog.
@@ -213,6 +223,16 @@ namespace PedalBuilder
                 SeedDatabase.SeedResistors();
                 _context.Components.Load();
                 componentDataGrid.Items.Refresh();
+            }
+        }
+
+        private void btnRemovePedalFromOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstPedals.SelectedValue != null)
+            {
+                var pedal = (Pedal) (lstPedals.SelectedItem);
+                order.Pedals.Remove(pedal);
+                fillOrderListAndUpdateOrderDataGrid();
             }
         }
     }
