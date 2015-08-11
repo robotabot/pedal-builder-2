@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PedalBuilder"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        x:Name="window"
         mc:Ignorable="d"
         Title="Pedal Builder" Height="825.5" Width="1333.5" Loaded="Window_Loaded"
         GlowBrush="{DynamicResource AccentColorBrush}"
@@ -97,7 +98,18 @@
             </TabItem>
             </TabControl>
             <StatusBar DockPanel.Dock="Bottom">
-                <Label Name="lblStatus" Height="25" Width="264" Foreground="White"></Label>
+                <Label Name="lblStatus" DataContext="{Binding ElementName=window}" Content="{Binding Path=Status, NotifyOnTargetUpdated=True}" Height="34" Width="264" Foreground="White" FontSize="16" VerticalAlignment="Center">
+                    <Label.Triggers>
+                        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0" To="1.0" />
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:5" To="0.0" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Label.Triggers>
+                </Label>
             </StatusBar>
         </DockPanel>
         

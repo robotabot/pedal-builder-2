@@ -23,6 +23,15 @@ namespace PedalBuilder
         private Order order = new Order();
         private Pedal _selectedPedal;
         private decimal _totalCost = new decimal(0.00);
+
+        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(string), typeof(Window), new UIPropertyMetadata(string.Empty));
+        public string Status {
+            get { return (string) this.GetValue(StatusProperty); }
+            set { this.SetValue(StatusProperty, value); }
+        }
+
+        
+        //TODO Find better way to always update status label
         public MainWindow()
         {
             InitializeComponent();
@@ -57,14 +66,16 @@ namespace PedalBuilder
         {
             var changed = _context.SaveChanges();
             pedalDataGrid.Items.Refresh();
-            lblStatus.Content = changed + " pedals changed.";
+            Status = "";
+            Status = changed + " pedals changed.";
         }
 
         private void btnUpdateComponent_Click(object sender, RoutedEventArgs e)
         {
             var changed = _context.SaveChanges();
             componentDataGrid.Items.Refresh();
-            lblStatus.Content = changed + " components changed.";
+            Status = "";
+            Status = changed + " components changed.";
         }
 
         private void pedalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,7 +98,8 @@ namespace PedalBuilder
                 part.Component_ComponentId = _selectedComponent.ComponentId;
                 part.Name = txtPartName.Text;
                 part.Pedal_PedalId = _selectedPedal.PedalId;
-                lblStatus.Content = part.Name + " added to " + _selectedPedal.Name + ".";
+                Status = "";
+                Status = part.Name + " added to " + _selectedPedal.Name + ".";
                 _context.Parts.Add(part);
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
@@ -112,8 +124,8 @@ namespace PedalBuilder
             if (partDataGrid.SelectedValue != null)
             {
                 var part = (Part) (partDataGrid.SelectedItem);
-
-                lblStatus.Content = part.Name + " removed from " + part.Pedal.Name + ".";
+                Status = "";
+                Status = part.Name + " removed from " + part.Pedal.Name + ".";
                 _context.Parts.Remove(part);
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
@@ -161,7 +173,8 @@ namespace PedalBuilder
 
                 txtPedalBuildQuantity.Clear();
                 fillOrderListAndUpdateOrderDataGrid();
-                lblStatus.Content = quantity + " " + _selectedPedal.Name + "  added to order.";
+                Status = "";
+                Status = quantity + " " + _selectedPedal.Name + "  added to order.";
             }
         }
 
@@ -216,7 +229,8 @@ namespace PedalBuilder
                 componentDataGrid.Items.Refresh();
             }
 
-            lblStatus.Content = added + " components added to the list.";
+            Status = "";
+            Status = added + " components added to the list.";
         }
 
         private void btnRemovePedalFromOrder_Click(object sender, RoutedEventArgs e)
@@ -225,7 +239,8 @@ namespace PedalBuilder
             {
                 var pedal = (Pedal) (lstPedals.SelectedItem);
 
-                lblStatus.Content = pedal.Name + " removed from order.";
+                Status = "";
+                Status = pedal.Name + " removed from order.";
                 order.Pedals.Remove(pedal);
                 fillOrderListAndUpdateOrderDataGrid();
             }
