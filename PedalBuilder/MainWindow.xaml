@@ -17,8 +17,9 @@
         <CollectionViewSource x:Key="orderViewSource" />
     </Window.Resources>
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="775" Margin="10,10,0,0" VerticalAlignment="Top" Width="1306" Background="#FF272B30">
-            <TabItem Header="Pedals" BorderBrush="Black" Foreground="#FFC8C8C8" Background="#00000000">
+        <DockPanel>
+            <TabControl DockPanel.Dock="Top" x:Name="tabControl" HorizontalAlignment="Left" Height="745" Margin="10,10,0,0" VerticalAlignment="Top" Width="1306" Background="#FF272B30">
+                <TabItem Header="Pedals" BorderBrush="Black" Foreground="#FFC8C8C8" Background="#00000000">
                 <Grid Background="White" Margin="0,0,-3,-3" DataContext="{StaticResource pedalViewSource}">
                     <DataGrid x:Name="pedalDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,41,10,10" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" SelectionChanged="pedalDataGrid_SelectionChanged">
                         <DataGrid.Columns>
@@ -32,7 +33,7 @@
                     <Button x:Name="btnAddPedalToOrder" Content="ADD PEDAL TO ORDER" HorizontalAlignment="Left" Margin="387,11,0,0" VerticalAlignment="Top" Width="176" Height="1" Background="White" Click="btnAddPedalToOrder_Click" BorderBrush="#FFCCCCCC"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Components" Foreground="#FFC8C8C8" Background="#00F9F9F9">
+                <TabItem Header="Components" Foreground="#FFC8C8C8" Background="#00F9F9F9">
                 <Grid Background="White" Margin="0,0,-4,-1" DataContext="{StaticResource componentViewSource}">
                     <DataGrid x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,41,480,10" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
@@ -63,7 +64,7 @@
                     <TextBox x:Name="txtSearchComponents" HorizontalAlignment="Left" Height="22" Margin="206,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="238" TextChanged="txtSearchComponents_TextChanged" BorderBrush="#FFCCCCCC" Controls:TextBoxHelper.Watermark="Search" Controls:TextBoxHelper.ClearTextButton="True"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Order" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="89" Margin="0,0,-34,0" Background="#00000000">
+                <TabItem Header="Order" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="89" Margin="0,0,-34,0" Background="#00000000">
                 <Grid x:Name="Orders" Background="White">
                     <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="668" Width="1034" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
@@ -89,11 +90,16 @@
                     <Button x:Name="btnRemovePedalFromOrder" Content="Remove Pedal From Order" HorizontalAlignment="Left" Margin="1049,10,0,0" VerticalAlignment="Top" Width="173" Click="btnRemovePedalFromOrder_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="Autofill1" Header="Autofill" Background="#00000000">
+                <TabItem x:Name="Autofill1" Header="Autofill" Background="#00000000">
                 <Grid x:Name="Autofill" Background="White">
                     <Button x:Name="btnFillResistors" Content="Fill Resistors" HorizontalAlignment="Left" Margin="105,75,0,0" VerticalAlignment="Top" Width="134" Height="57" Click="btnFillResistorsClick" BorderBrush="#FFCCCCCC"/>
                 </Grid>
             </TabItem>
-        </TabControl>
+            </TabControl>
+            <StatusBar DockPanel.Dock="Bottom">
+                <Label Name="lblStatus" Height="25" Width="264" Foreground="White"></Label>
+            </StatusBar>
+        </DockPanel>
+        
     </Grid>
 </Controls:MetroWindow>

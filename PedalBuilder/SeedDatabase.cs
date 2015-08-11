@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace PedalBuilder
 {
     public class SeedDatabase
     {
+        private static int added = 0;
         private static PedalContext _context = new PedalContext();
         private static Component resistor;
         private static List<Component> resistorList = new List<Component>(); 
@@ -138,7 +140,7 @@ namespace PedalBuilder
         };
 
         //TODO fix disposal of context
-        public static void SeedResistors()
+        public static int SeedResistors()
         {
             foreach (string r in resistorValues)
             {
@@ -149,11 +151,14 @@ namespace PedalBuilder
                 resistorList.Add(resistor);
             }
             _context.Components.AddRange(resistorList);
+            added = _context.SaveChanges();
 
-            if (_context.SaveChanges() > 0)
+            if (added > 0)
             {
                 _context.Dispose();
             }
+
+            return added;
         }
 
     }

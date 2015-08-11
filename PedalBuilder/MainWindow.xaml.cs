@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PedalBuilder
 {
@@ -194,20 +196,20 @@ namespace PedalBuilder
             orderDataGrid.Items.Refresh();
         }
 
-        //TODO Use Mahapps dialog box, move into SeedDatabase class, add progress dialog.
-        private void btnFillResistorsClick(object sender, RoutedEventArgs e)
+        private async void btnFillResistorsClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result =
-                MessageBox.Show(
-                    "Add many common resistors to the component list?\nResistors will have Type, Value, and Price of 0.00 specified.",
-                    "Autofill Resistors", MessageBoxButton.YesNo);
+            var added = 0;
 
-            if (result == MessageBoxResult.Yes)
+            MessageDialogResult result = await this.ShowMessageAsync("Fill With Resistors", "Add many common resistors to the component list?\nResistors will have Type, Value, and Price of 0.00 specified.", MessageDialogStyle.AffirmativeAndNegative);
+
+            if (result == MessageDialogResult.Affirmative)
             {
-                SeedDatabase.SeedResistors();
+                added = SeedDatabase.SeedResistors();
                 _context.Components.Load();
                 componentDataGrid.Items.Refresh();
             }
+
+            lblStatus.Content = added + " components added to the list.";
         }
 
         private void btnRemovePedalFromOrder_Click(object sender, RoutedEventArgs e)
