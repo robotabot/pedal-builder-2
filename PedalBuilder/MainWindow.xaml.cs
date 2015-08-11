@@ -55,14 +55,16 @@ namespace PedalBuilder
 
         private void btnPedalUpdate_Click(object sender, RoutedEventArgs e)
         {
-            _context.SaveChanges();
+            var changed = _context.SaveChanges();
             pedalDataGrid.Items.Refresh();
+            lblStatus.Content = changed + " pedals changed.";
         }
 
         private void btnUpdateComponent_Click(object sender, RoutedEventArgs e)
         {
-            _context.SaveChanges();
+            var changed = _context.SaveChanges();
             componentDataGrid.Items.Refresh();
+            lblStatus.Content = changed + " components changed.";
         }
 
         private void pedalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,6 +87,7 @@ namespace PedalBuilder
                 part.Component_ComponentId = _selectedComponent.ComponentId;
                 part.Name = txtPartName.Text;
                 part.Pedal_PedalId = _selectedPedal.PedalId;
+                lblStatus.Content = part.Name + " added to " + _selectedPedal.Name + ".";
                 _context.Parts.Add(part);
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
@@ -109,10 +112,13 @@ namespace PedalBuilder
             if (partDataGrid.SelectedValue != null)
             {
                 var part = (Part) (partDataGrid.SelectedItem);
+
+                lblStatus.Content = part.Name + " removed from " + part.Pedal.Name + ".";
                 _context.Parts.Remove(part);
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
                 updatePedalCost();
+                
             }
         }
 
@@ -155,6 +161,7 @@ namespace PedalBuilder
 
                 txtPedalBuildQuantity.Clear();
                 fillOrderListAndUpdateOrderDataGrid();
+                lblStatus.Content = quantity + " " + _selectedPedal.Name + "  added to order.";
             }
         }
 
@@ -217,6 +224,8 @@ namespace PedalBuilder
             if (lstPedals.SelectedValue != null)
             {
                 var pedal = (Pedal) (lstPedals.SelectedItem);
+
+                lblStatus.Content = pedal.Name + " removed from order.";
                 order.Pedals.Remove(pedal);
                 fillOrderListAndUpdateOrderDataGrid();
             }
