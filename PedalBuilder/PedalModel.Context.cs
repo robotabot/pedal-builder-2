@@ -13,10 +13,10 @@ namespace PedalBuilder
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PedalsContext : DbContext
+    public partial class PedalContext : DbContext
     {
-        public PedalsContext()
-            : base("name=PedalsContext")
+        public PedalContext()
+            : base("name=PedalContext")
         {
         }
     

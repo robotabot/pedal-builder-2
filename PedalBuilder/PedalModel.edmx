@@ -4,24 +4,24 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PedalsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PedalModel.Store" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Components">
           <Key>
             <PropertyRef Name="ComponentId" />
           </Key>
           <Property Name="ComponentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="Url" Type="nvarchar(max)" />
-          <Property Name="Price" Type="decimal" Precision="9" Scale="9" />
+          <Property Name="Type" Type="ntext" Nullable="false" />
+          <Property Name="Value" Type="ntext" Nullable="false" />
+          <Property Name="Notes" Type="ntext" />
+          <Property Name="Url" Type="ntext" />
+          <Property Name="Price" Type="numeric" Precision="9" Scale="9" />
         </EntityType>
         <EntityType Name="Parts">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="ntext" Nullable="false" />
           <Property Name="Pedal_PedalId" Type="int" Nullable="false" />
           <Property Name="Component_ComponentId" Type="int" Nullable="false" />
         </EntityType>
@@ -30,8 +30,8 @@
             <PropertyRef Name="PedalId" />
           </Key>
           <Property Name="PedalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Name" Type="ntext" Nullable="false" />
+          <Property Name="Notes" Type="ntext" />
         </EntityType>
         <Association Name="FK_PartComponent">
           <End Role="Components" Type="Self.Components" Multiplicity="1">
@@ -61,10 +61,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PedalsModelStoreContainer">
-          <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Parts" EntityType="Self.Parts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Pedals" EntityType="Self.Pedals" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="PedalModelStoreContainer">
+          <EntitySet Name="Components" EntityType="Self.Components" store:Type="Tables" />
+          <EntitySet Name="Parts" EntityType="Self.Parts" store:Type="Tables" />
+          <EntitySet Name="Pedals" EntityType="Self.Pedals" store:Type="Tables" />
           <AssociationSet Name="FK_PartComponent" Association="Self.FK_PartComponent">
             <End Role="Components" EntitySet="Components" />
             <End Role="Parts" EntitySet="Parts" />
@@ -74,11 +74,10 @@
             <End Role="Parts" EntitySet="Parts" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PedalsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PedalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Component">
           <Key>
             <PropertyRef Name="ComponentId" />
@@ -115,8 +114,7 @@
           <End Role="Components" Type="Self.Component" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Parts" Type="Self.Part" Multiplicity="*" >
-          </End>
+          <End Role="Parts" Type="Self.Part" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Components">
               <PropertyRef Name="ComponentId" />
@@ -140,7 +138,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PedalsContext" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PedalContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Components" EntityType="Self.Component" />
           <EntitySet Name="Parts" EntityType="Self.Part" />
           <EntitySet Name="Pedals" EntityType="Self.Pedal" />
@@ -158,9 +156,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PedalsModelStoreContainer" CdmEntityContainer="PedalsContext">
+        <EntityContainerMapping StorageEntityContainer="PedalModelStoreContainer" CdmEntityContainer="PedalContext">
           <EntitySetMapping Name="Components">
-            <EntityTypeMapping TypeName="PedalsModel.Component">
+            <EntityTypeMapping TypeName="PedalModel.Component">
               <MappingFragment StoreEntitySet="Components">
                 <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -172,7 +170,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parts">
-            <EntityTypeMapping TypeName="PedalsModel.Part">
+            <EntityTypeMapping TypeName="PedalModel.Part">
               <MappingFragment StoreEntitySet="Parts">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -182,7 +180,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pedals">
-            <EntityTypeMapping TypeName="PedalsModel.Pedal">
+            <EntityTypeMapping TypeName="PedalModel.Pedal">
               <MappingFragment StoreEntitySet="Pedals">
                 <ScalarProperty Name="PedalId" ColumnName="PedalId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

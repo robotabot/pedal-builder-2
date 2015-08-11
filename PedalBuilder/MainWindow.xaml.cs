@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
 namespace PedalBuilder
@@ -25,13 +14,13 @@ namespace PedalBuilder
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        private PedalsContext _context = new PedalsContext();
+        private PedalContext _context = new PedalContext();
         private List<dynamic> groupedList = new List<dynamic>(); 
-        private decimal pedalCost = new decimal(0.00);
+        private decimal _pedalCost = new decimal(0.00);
         private Component _selectedComponent = new Component();
         private Order order = new Order();
         private Pedal _selectedPedal;
-        private decimal totalCost = new decimal(0.00);
+        private decimal _totalCost = new decimal(0.00);
         public MainWindow()
         {
             InitializeComponent();
@@ -64,11 +53,6 @@ namespace PedalBuilder
 
         private void btnPedalUpdate_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var pedal in _context.Pedals.Local.ToList().Where(pedal => pedal.Name == null))
-            {
-                _context.Pedals.Remove(pedal);
-            }
-
             _context.SaveChanges();
             pedalDataGrid.Items.Refresh();
         }
@@ -109,13 +93,13 @@ namespace PedalBuilder
 
         private void updatePedalCost()
         {
-            pedalCost = (decimal) 0.00;
+            _pedalCost = (decimal) 0.00;
             foreach (Part part in partDataGrid.Items)
             {
-                if (part.Component.Price != null) pedalCost += part.Component.Price.Value;
+                if (part.Component.Price != null) _pedalCost += part.Component.Price.Value;
             }
             
-            lblPedalCost.Content = pedalCost.ToString("#,#.##");
+            lblPedalCost.Content = _pedalCost.ToString("#,#.##");
         }
 
         private void btnDeletePart_Click(object sender, RoutedEventArgs e)
@@ -185,7 +169,7 @@ namespace PedalBuilder
                 }
             }
 
-            totalCost = (decimal) 0.00;
+            _totalCost = (decimal) 0.00;
             var tempList = order.Components.GroupBy(c => c.ComponentId)
                 .Select(c => new
                 {
@@ -201,11 +185,11 @@ namespace PedalBuilder
             foreach (var item in tempList)
             {
                 groupedList.Add(item);
-                totalCost += (item.Price.Value * item.Quantity);
+                _totalCost += (item.Price.Value * item.Quantity);
             }
 
             lblOrderPedalsQuantity.Content = order.Pedals.Count;
-            lblOrderTotalCost.Content = totalCost.ToString("#,#.##");
+            lblOrderTotalCost.Content = _totalCost.ToString("#,#.##");
             lstPedals.Items.Refresh();
             orderDataGrid.Items.Refresh();
         }

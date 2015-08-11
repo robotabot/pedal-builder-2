@@ -43,6 +43,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +54,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -75,28 +83,28 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Component.cs">
-      <DependentUpon>PedalsModel.tt</DependentUpon>
+      <DependentUpon>PedalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Part.cs">
-      <DependentUpon>PedalsModel.tt</DependentUpon>
+      <DependentUpon>PedalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Pedal.cs">
-      <DependentUpon>PedalsModel.tt</DependentUpon>
+      <DependentUpon>PedalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="PedalsModel.Context.cs">
+    <Compile Include="PedalModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PedalsModel.Context.tt</DependentUpon>
+      <DependentUpon>PedalModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="PedalsModel.cs">
+    <Compile Include="PedalModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PedalsModel.tt</DependentUpon>
+      <DependentUpon>PedalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="PedalsModel.Designer.cs">
+    <Compile Include="PedalModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PedalsModel.edmx</DependentUpon>
+      <DependentUpon>PedalModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SeedDatabase.cs" />
     <Page Include="MainWindow.xaml">
@@ -132,12 +140,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <EntityDeploy Include="PedalsModel.edmx">
+    <EntityDeploy Include="PedalModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PedalsModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>PedalModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="PedalsModel.edmx.diagram">
-      <DependentUpon>PedalsModel.edmx</DependentUpon>
+    <None Include="PedalModel.edmx.diagram">
+      <DependentUpon>PedalModel.edmx</DependentUpon>
     </None>
     <None Include="Properties\DataSources\Component.datasource" />
     <None Include="Properties\DataSources\Part.datasource" />
@@ -155,18 +163,25 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PedalsModel.Context.tt">
+    <Content Include="PedalModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PedalsModel.edmx</DependentUpon>
-      <LastGenOutput>PedalsModel.Context.cs</LastGenOutput>
+      <DependentUpon>PedalModel.edmx</DependentUpon>
+      <LastGenOutput>PedalModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="PedalsModel.tt">
+    <Content Include="PedalModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PedalsModel.edmx</DependentUpon>
-      <LastGenOutput>PedalsModel.cs</LastGenOutput>
+      <DependentUpon>PedalModel.edmx</DependentUpon>
+      <LastGenOutput>PedalModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

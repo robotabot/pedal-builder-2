@@ -12,7 +12,7 @@ namespace PedalBuilder
 {
     public class SeedDatabase
     {
-        private static PedalsContext _context = new PedalsContext();
+        private static PedalContext _context = new PedalContext();
         private static Component resistor;
         private static List<Component> resistorList = new List<Component>(); 
         private static string[] resistorValues = new string[]
@@ -137,6 +137,7 @@ namespace PedalBuilder
             "2.7M"
         };
 
+        //TODO fix disposal of context
         public static void SeedResistors()
         {
             foreach (string r in resistorValues)
@@ -148,8 +149,11 @@ namespace PedalBuilder
                 resistorList.Add(resistor);
             }
             _context.Components.AddRange(resistorList);
-            _context.SaveChanges();
-            _context.Dispose();
+
+            if (_context.SaveChanges() > 0)
+            {
+                _context.Dispose();
+            }
         }
 
     }
