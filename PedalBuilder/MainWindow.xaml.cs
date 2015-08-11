@@ -211,6 +211,7 @@ namespace PedalBuilder
             }
 
             lblOrderPedalsQuantity.Content = order.Pedals.Count;
+            lblComponentQuantity.Content = order.Components.Count;
             lblOrderTotalCost.Content = _totalCost.ToString("#,#.##");
             lstPedals.Items.Refresh();
             orderDataGrid.Items.Refresh();
