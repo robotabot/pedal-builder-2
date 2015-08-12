@@ -85,6 +85,7 @@
     <Compile Include="Component.cs">
       <DependentUpon>PedalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderItem.cs" />
     <Compile Include="Part.cs">
       <DependentUpon>PedalModel.tt</DependentUpon>
     </Compile>

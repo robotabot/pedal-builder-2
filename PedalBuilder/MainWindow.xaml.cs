@@ -22,6 +22,7 @@ namespace PedalBuilder
         private List<dynamic> groupedList = new List<dynamic>(); 
         private decimal _pedalCost = new decimal(0.00);
         private Component _selectedComponent = new Component();
+        private OrderItem _orderItem = new OrderItem();
         private Order order = new Order();
         private Pedal _selectedPedal;
         private decimal _totalCost = new decimal(0.00);
@@ -59,7 +60,7 @@ namespace PedalBuilder
             partViewSource.Source = _context.Parts.Local;
 
             CollectionViewSource orderViewSource = ((CollectionViewSource) (this.FindResource("orderViewSource")));
-            orderViewSource.Source = groupedList;
+            orderViewSource.Source = order.Items;
 
             lstPedals.ItemsSource = order.Pedals;
         }
@@ -183,7 +184,7 @@ namespace PedalBuilder
         private void fillOrderListAndUpdateOrderDataGrid()
         {
             order.Components.Clear();
-            groupedList.Clear();
+            order.Items.Clear();
 
             foreach (Pedal pedal in order.Pedals)
             {
@@ -197,7 +198,7 @@ namespace PedalBuilder
             var tempList = order.Components.GroupBy(c => c.ComponentId)
                 .Select(c => new
                 {
-                    Checked = false,
+                    Ordered = false,
                     Quantity = c.Count(),
                     Type = c.First().Type,
                     Value = c.First().Value,
@@ -208,7 +209,14 @@ namespace PedalBuilder
 
             foreach (var item in tempList)
             {
-                groupedList.Add(item);
+                _orderItem.Ordered = item.Ordered;
+                _orderItem.Quantity = item.Quantity;
+                _orderItem.Type = item.Type;
+                _orderItem.Value = item.Value;
+                _orderItem.Notes = item.Notes;
+                _orderItem.Url = item.Url;
+                _orderItem.Price = item.Price;
+                order.Items.Add(_orderItem);
                 _totalCost += (item.Price.Value * item.Quantity);
             }
 
@@ -258,5 +266,13 @@ namespace PedalBuilder
             }
         }
 
+        private void orderDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var item = (OrderItem) (orderDataGrid.SelectedItem);
+            if (item.Url != null)
+            {
+                Process.Start(item.Url);
+            }
+        }
     }
 }
