@@ -14,7 +14,7 @@
           <Property Name="Value" Type="ntext" Nullable="false" />
           <Property Name="Notes" Type="ntext" />
           <Property Name="Url" Type="ntext" />
-          <Property Name="Price" Type="numeric" Precision="9" Scale="9" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="9" />
         </EntityType>
         <EntityType Name="Parts">
           <Key>
@@ -87,7 +87,7 @@
           <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="9" Scale="9" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="9" />
           <NavigationProperty Name="Parts" Relationship="Self.FK_PartComponent" FromRole="Components" ToRole="Parts" />
         </EntityType>
         <EntityType Name="Part">
