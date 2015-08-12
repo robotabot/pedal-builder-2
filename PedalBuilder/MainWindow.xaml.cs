@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -246,5 +248,15 @@ namespace PedalBuilder
                 fillOrderListAndUpdateOrderDataGrid();
             }
         }
+
+        private void componentDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var component = (Component) (componentDataGrid.SelectedItem);
+            if (component.Url != null)
+            {
+                Process.Start(component.Url);
+            }
+        }
+
     }
 }
