@@ -13,6 +13,9 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace PedalBuilder
 {
+
+    //TODO Spruce up Autofill tab.
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -27,8 +30,14 @@ namespace PedalBuilder
         private Pedal _selectedPedal;
         private decimal _totalCost = new decimal(0.00);
 
+        /// <summary>
+        /// DependencyProperty to allow the status bar label to display information.
+        /// </summary>
         public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(string), typeof(Window), new UIPropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// Property which gets and sets the StatusProperty.
+        /// </summary>
         public string Status
         {
             get { return (string) this.GetValue(StatusProperty); }
@@ -67,6 +76,13 @@ namespace PedalBuilder
             lstPedals.ItemsSource = order.Pedals;
         }
 
+        /// <summary>
+        /// Saves changes to the database.
+        /// Updates the pedal datagrid.
+        /// Provides status message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPedalUpdate_Click(object sender, RoutedEventArgs e)
         {
             var changed = _context.SaveChanges();
@@ -75,6 +91,13 @@ namespace PedalBuilder
             Status = changed + " pedals changed.";
         }
 
+        /// <summary>
+        /// Saves changes to the database.
+        /// Updates the component datagrid.
+        /// Provides status message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnUpdateComponent_Click(object sender, RoutedEventArgs e)
         {
             var changed = _context.SaveChanges();
@@ -83,6 +106,12 @@ namespace PedalBuilder
             Status = changed + " components changed.";
         }
 
+        /// <summary>
+        /// Saves a reference to the selected pedal.
+        /// Updates the pedal cost shown on the components tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pedalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pedalDataGrid.SelectedValue != null && pedalDataGrid.SelectedValue.ToString() != "{NewItemPlaceholder}")
@@ -94,6 +123,18 @@ namespace PedalBuilder
             }
         }
 
+        /// <summary>
+        /// Adds the selected component to the selected pedal.
+        /// Saves a reference to the selected pedal.
+        /// Saves a reference to the selected component.
+        /// Creates a new part.
+        /// Saves the changes to the database.
+        /// Refreshes the part datagrid.
+        /// Update the pedal cost.
+        /// Provide a status message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddComponentToPedal_Click(object sender, RoutedEventArgs e)
         {
             if (componentDataGrid.SelectedValue != null && componentDataGrid.SelectedValue.ToString() != "{NewItemPlaceholder}" && _selectedPedal != null && txtPartName.Text.Length > 0)
@@ -113,6 +154,10 @@ namespace PedalBuilder
             }
         }
 
+        /// <summary>
+        /// Collects the cost of all parts in the pedal.
+        /// Formats the string shown on the pedal cost label.
+        /// </summary>
         private void updatePedalCost()
         {
             _pedalCost = (decimal) 0.00;
@@ -124,21 +169,33 @@ namespace PedalBuilder
             lblPedalCost.Content = _pedalCost.ToString("#,#.##");
         }
 
+        /// <summary>
+        /// Removes a part from the Part table.
+        /// Refreshes the part datagrid.
+        /// Updates the pedal cost.
+        /// Provides a status message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDeletePart_Click(object sender, RoutedEventArgs e)
         {
             if (partDataGrid.SelectedValue != null)
             {
                 var part = (Part) (partDataGrid.SelectedItem);
                 Status = "";
-                Status = part.Name + " removed from "  + ".";
+                Status = part.Name + " removed from "  + part.Pedal.Name + ".";
                 _context.Parts.Remove(part);
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
                 updatePedalCost();
-                //+ part.Pedal.Name
             }
         }
 
+        /// <summary>
+        /// Searches the component datagrid for the search string.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtSearchComponents_TextChanged(object sender, TextChangedEventArgs e)
         {
             string search = txtSearchComponents.Text.ToLower();
@@ -164,6 +221,13 @@ namespace PedalBuilder
             }
         }
 
+        /// <summary>
+        /// Adds the entered quantity of pedals to the order.
+        /// Refreshes the order list anad order datagrid.
+        /// Provides a status message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddPedalToOrder_Click(object sender, RoutedEventArgs e)
         {
             short quantity;
@@ -183,6 +247,14 @@ namespace PedalBuilder
             }
         }
 
+        /// <summary>
+        /// Clears the order's components and items.
+        /// Adds each pedal's parts to the order's components.
+        /// Creates a sorted list of components with an aggregated quantity.
+        /// For each component, fills the properties of the order item and adds it to the order.
+        /// Updates pedal and component counts, and total cost of all components.
+        /// Refreshes the list of pedals and order datagrid.
+        /// </summary>
         private void fillOrderListAndUpdateOrderDataGrid()
         {
             order.Components.Clear();
@@ -229,6 +301,15 @@ namespace PedalBuilder
             orderDataGrid.Items.Refresh();
         }
 
+        /// <summary>
+        /// Seeds the database with many common resistor values.
+        /// Prompts the user to accept or decline.
+        /// Calls the FillResistors method of the SeedDatabase class.
+        /// Refreshes the context and component datagrid.
+        /// Provides a status update.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void btnFillResistorsClick(object sender, RoutedEventArgs e)
         {
             var added = 0;
@@ -246,6 +327,13 @@ namespace PedalBuilder
             Status = added + " components added to the list.";
         }
 
+        /// <summary>
+        /// Removes a pedal from the order.
+        /// Calls fillOrderListAndUpdateOrderDataGrid() to update the order and information displays.
+        /// Provides a status message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemovePedalFromOrder_Click(object sender, RoutedEventArgs e)
         {
             if (lstPedals.SelectedValue != null)
@@ -258,7 +346,12 @@ namespace PedalBuilder
                 fillOrderListAndUpdateOrderDataGrid();
             }
         }
-
+        /// <summary>
+        /// Start a browser when an item in the component datagrid is doubleclicked.
+        /// Navigates to the component's url.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void componentDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var component = (Component) (componentDataGrid.SelectedItem);
@@ -268,6 +361,12 @@ namespace PedalBuilder
             }
         }
 
+        /// <summary>
+        /// Start a browser when an item in the order datagrid is doubleclicked.
+        /// Navigates to the component's url.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void orderDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var item = (OrderItem) (orderDataGrid.SelectedItem);

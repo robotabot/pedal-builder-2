@@ -16,7 +16,11 @@ namespace PedalBuilder
         private static int added = 0;
         private static PedalContext _context = new PedalContext();
         private static Component resistor;
-        private static List<Component> resistorList = new List<Component>(); 
+        private static List<Component> resistorList = new List<Component>();
+
+        /// <summary>
+        /// A list of common resistor values.
+        /// </summary>
         private static string[] resistorValues = new string[]
         {
             "0",
@@ -140,6 +144,13 @@ namespace PedalBuilder
         };
 
         //TODO fix disposal of context
+        /// <summary>
+        /// Creates a new component for each resistor.
+        /// Adds the component to the list of resistors.
+        /// Saves the components to the database.
+        /// Disposes the context.
+        /// </summary>
+        /// <returns> int added</returns>
         public static int SeedResistors()
         {
             foreach (string r in resistorValues)
