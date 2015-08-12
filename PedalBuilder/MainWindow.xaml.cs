@@ -20,7 +20,6 @@ namespace PedalBuilder
     {
 
         private PedalContext _context = new PedalContext();
-        private List<dynamic> groupedList = new List<dynamic>(); 
         private decimal _pedalCost = new decimal(0.00);
         private Component _selectedComponent = new Component();
         private OrderItem _orderItem = new OrderItem();
