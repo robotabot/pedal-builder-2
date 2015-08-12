@@ -18,6 +18,7 @@ namespace PedalBuilder
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+
         private PedalContext _context = new PedalContext();
         private List<dynamic> groupedList = new List<dynamic>(); 
         private decimal _pedalCost = new decimal(0.00);
@@ -28,16 +29,18 @@ namespace PedalBuilder
         private decimal _totalCost = new decimal(0.00);
 
         public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(string), typeof(Window), new UIPropertyMetadata(string.Empty));
-        public string Status {
+
+        public string Status
+        {
             get { return (string) this.GetValue(StatusProperty); }
             set { this.SetValue(StatusProperty, value); }
         }
 
-        
         //TODO Find better way to always update status label
         public MainWindow()
         {
             InitializeComponent();
+            AppDomain.CurrentDomain.SetData("DataDirectory", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -128,12 +131,12 @@ namespace PedalBuilder
             {
                 var part = (Part) (partDataGrid.SelectedItem);
                 Status = "";
-                Status = part.Name + " removed from " + part.Pedal.Name + ".";
+                Status = part.Name + " removed from "  + ".";
                 _context.Parts.Remove(part);
                 _context.SaveChanges();
                 partDataGrid.Items.Refresh();
                 updatePedalCost();
-                
+                //+ part.Pedal.Name
             }
         }
 
