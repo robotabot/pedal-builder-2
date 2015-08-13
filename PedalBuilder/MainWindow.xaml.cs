@@ -25,7 +25,7 @@ namespace PedalBuilder
         private PedalContext _context = new PedalContext();
         private decimal _pedalCost = new decimal(0.00);
         private Component _selectedComponent = new Component();
-        private OrderItem _orderItem = new OrderItem();
+        private OrderItem _orderItem;
         private Order order = new Order();
         private Pedal _selectedPedal;
         private decimal _totalCost = new decimal(0.00);
@@ -283,6 +283,7 @@ namespace PedalBuilder
 
             foreach (var item in tempList)
             {
+                _orderItem = new OrderItem();
                 _orderItem.Ordered = item.Ordered;
                 _orderItem.Quantity = item.Quantity;
                 _orderItem.Type = item.Type;
