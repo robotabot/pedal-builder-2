@@ -59,7 +59,7 @@
                         <TextBox x:Name="txtComponentPrice" Grid.Row="1" Controls:TextBoxHelper.Watermark="Price" Width="60" Height="25" Margin="185,10,1061,1"></TextBox>
                         <TextBox x:Name="txtComponentNotes" Grid.Row="1" Controls:TextBoxHelper.Watermark="Notes" Width="250" Height="25" Margin="250,10,806,1"></TextBox>
                         <TextBox x:Name="txtComponentUrl" Grid.Row="1" Controls:TextBoxHelper.Watermark="Url" Height="25" Margin="505,10,480,1"></TextBox>
-                        <DataGrid Grid.Row="2" x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,480,10" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" MouseDoubleClick="componentDataGrid_MouseDoubleClick" IsReadOnly="True">
+                        <DataGrid Grid.Row="2" x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,480,12" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" MouseDoubleClick="componentDataGrid_MouseDoubleClick" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="componentIdColumn" Binding="{Binding ComponentId}" Header="Component Id" Width="SizeToHeader" Visibility="Hidden"/>
                                 <DataGridTextColumn x:Name="typeColumn" Binding="{Binding Type}" Header="Type" Width="75" SortDirection="Ascending"/>
@@ -69,7 +69,7 @@
                                 <DataGridTextColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid Grid.Row="1" x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,10,75,10" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" Grid.RowSpan="2">
+                        <DataGrid Grid.Row="1" x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,10,75,12" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" Grid.RowSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="component_ComponentIdColumn" Binding="{Binding Component_ComponentId}" Header="Component Component Id" Width="SizeToHeader" Visibility="Hidden"/>
                                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader" Visibility="Hidden"/>
@@ -87,7 +87,7 @@
                 </TabItem>
                 <TabItem Header="Order" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="89" Margin="0,0,-34,0" Background="#00000000">
                     <Grid x:Name="Orders" Background="White">
-                        <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="668" Width="1034" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" MouseDoubleClick="orderDataGrid_MouseDoubleClick" CanUserAddRows="False">
+                        <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="638" Width="1034" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" MouseDoubleClick="orderDataGrid_MouseDoubleClick" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}" EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" Binding="{Binding Ordered, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Ordered"/>
                                 <DataGridTextColumn Binding="{Binding Type, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Type" FontSize="16" Width="100"/>
@@ -101,7 +101,7 @@
                         <Label x:Name="lblOrderPedalsQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top" Foreground="Black"/>
                         <Label x:Name="lblOrderTotalCostStatic" Content="Total Cost" HorizontalAlignment="Left" Margin="483,10,0,0" VerticalAlignment="Top" Foreground="Black"/>
                         <Label x:Name="lblOrderTotalCost" Content="0.00" HorizontalAlignment="Left" Margin="551,10,0,0" VerticalAlignment="Top" Foreground="Black"/>
-                        <ListBox x:Name="lstPedals" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="668" Margin="1049,50,0,0" VerticalAlignment="Top" Width="243">
+                        <ListBox x:Name="lstPedals" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="638" Margin="1049,50,0,0" VerticalAlignment="Top" Width="243">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
