@@ -89,7 +89,7 @@
                     <Grid x:Name="Orders" Background="White">
                         <DataGrid x:Name="orderDataGrid" DataContext="{StaticResource orderViewSource}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="668" Width="1034" Background="White" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" MouseDoubleClick="orderDataGrid_MouseDoubleClick" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}" EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" Binding="{Binding Ordered}" ClipboardContentBinding="{x:Null}" Header="Ordered"/>
+                                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}" EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" Binding="{Binding Ordered, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Ordered"/>
                                 <DataGridTextColumn Binding="{Binding Type, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Type" FontSize="16" Width="100"/>
                                 <DataGridTextColumn Binding="{Binding Value, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Value" Width="100"/>
                                 <DataGridTextColumn Binding="{Binding Quantity, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Quantity" Width="Auto"/>
