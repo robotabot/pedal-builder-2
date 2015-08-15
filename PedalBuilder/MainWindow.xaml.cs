@@ -85,10 +85,20 @@ namespace PedalBuilder
         /// <param name="e"></param>
         private void btnPedalUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var changed = _context.SaveChanges();
-            pedalDataGrid.Items.Refresh();
-            Status = "";
-            Status = changed + " pedals changed.";
+            var name = txtPedalName.Text;
+            var notes = txtPedalNotes.Text;
+
+            if (name.Length > 0)
+            {
+                Pedal newPedal = new Pedal();
+                newPedal.Name = name;
+                newPedal.Notes = notes;
+                _context.Pedals.Add(newPedal);
+                var changed = _context.SaveChanges();
+                pedalDataGrid.Items.Refresh();
+                Status = "";
+                Status = changed + " pedals changed.";
+            }
         }
 
         /// <summary>
@@ -100,10 +110,27 @@ namespace PedalBuilder
         /// <param name="e"></param>
         private void btnUpdateComponent_Click(object sender, RoutedEventArgs e)
         {
-            var changed = _context.SaveChanges();
-            componentDataGrid.Items.Refresh();
-            Status = "";
-            Status = changed + " components changed.";
+            var type = txtComponentType.Text;
+            var value = txtComponentValue.Text;
+            var price = txtComponentPrice.Text.Length > 0 ? txtComponentPrice.Text : @"0.00";
+            var notes = txtComponentNotes.Text;
+            var url = txtComponentUrl.Text;
+
+            if (type.Length > 0 && value.Length > 0)
+            {
+                Component newComponent = new Component();
+                newComponent.Type = type;
+                newComponent.Value = value;
+                newComponent.Price = Convert.ToDecimal(price);
+                newComponent.Notes = notes;
+                newComponent.Url = url;
+                _context.Components.Add(newComponent);
+                var changed = _context.SaveChanges();
+                componentDataGrid.Items.Refresh();
+                Status = "";
+                Status = changed + " components changed.";
+            }
+            
         }
 
         /// <summary>
@@ -374,6 +401,68 @@ namespace PedalBuilder
             if (item.Url != null)
             {
                 Process.Start(item.Url);
+            }
+        }
+
+        private async void btnDeletePedal_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Pedal deletedPedal = (Pedal)(pedalDataGrid.SelectedItem);
+
+                MessageDialogResult result = await this.ShowMessageAsync("Delete Pedal", "Are you sure?\nDeleting " + deletedPedal.Name + " cannot be undone.\nAll parts will be lost.", MessageDialogStyle.AffirmativeAndNegative);
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    _context.Pedals.Remove(deletedPedal);
+                    _context.Pedals.Load();
+                    pedalDataGrid.Items.Refresh();
+                }
+
+                Status = "";
+                Status = deletedPedal.Name + " deleted.";
+            }
+            catch (InvalidCastException)
+            {
+                Status = "";
+                Status = "Error: pedal not deleted.";
+            }
+        }
+
+        private async void btnDeleteComponent_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Component deletedComponent = (Component)(componentDataGrid.SelectedItem);
+                string deletedMessage = 
+                "Are you sure?\nDeleting (" + deletedComponent.Type + ", " + deletedComponent.Value +
+                ") cannot be undone.\nParts will be lost from these pedals:";
+
+                var deletedParts = deletedComponent.Parts.GroupBy(p => p.Pedal)
+                    .Select(p => new
+                    {
+                        Quantity = p.Count(),
+                        PedalName = p.First().Pedal.Name
+                    });
+
+                deletedMessage = deletedParts.Aggregate(deletedMessage, (current, part) => current + ("\n" + part.Quantity + " parts in " + part.PedalName));
+
+                MessageDialogResult result = await this.ShowMessageAsync("Delete Component", deletedMessage, MessageDialogStyle.AffirmativeAndNegative);
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    _context.Components.Remove(deletedComponent);
+                    _context.Components.Load();
+                    componentDataGrid.Items.Refresh();
+                }
+
+                Status = "";
+                Status = deletedComponent.Type + ", " + deletedComponent.Value+ " deleted.";
+            }
+            catch (InvalidCastException)
+            {
+                Status = "";
+                Status = "Error: component not deleted.";
             }
         }
     }
