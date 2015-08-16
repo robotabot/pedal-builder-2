@@ -415,6 +415,7 @@ namespace PedalBuilder
                 if (result == MessageDialogResult.Affirmative)
                 {
                     _context.Pedals.Remove(deletedPedal);
+                    _context.SaveChanges();
                     _context.Pedals.Load();
                     pedalDataGrid.Items.Refresh();
                 }
@@ -452,6 +453,7 @@ namespace PedalBuilder
                 if (result == MessageDialogResult.Affirmative)
                 {
                     _context.Components.Remove(deletedComponent);
+                    _context.SaveChanges();
                     _context.Components.Load();
                     componentDataGrid.Items.Refresh();
                 }
