@@ -27,11 +27,11 @@
                             <RowDefinition Height="37*"></RowDefinition>
                             <RowDefinition Height="627*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Button Grid.Row="0" x:Name="btnPedalUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="103" Height="25" Background="White" BorderBrush="#FFCCCCCC" Click="btnPedalUpdate_Click"/>
-                        <TextBox Grid.Row="0" x:Name="txtPedalBuildQuantity" HorizontalAlignment="Left" Height="26" Margin="215,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" BorderBrush="#FFCCCCCC" Controls:TextBoxHelper.Watermark="Quantity To Build" Controls:TextBoxHelper.ClearTextButton="True"/>
-                        <Button Grid.Row="0" x:Name="btnAddPedalToOrder" Content="ADD PEDAL TO ORDER" HorizontalAlignment="Left" Margin="380,10,0,0" VerticalAlignment="Top" Width="176" Height="25" Background="White" Click="btnAddPedalToOrder_Click" BorderBrush="#FFCCCCCC"/>
-                        <TextBox x:Name="txtPedalName" Grid.Row="1" Controls:TextBoxHelper.Watermark="Name*" Margin="10,10,1095,1"/>
-                        <TextBox x:Name="txtPedalNotes" Grid.Row="1" Height="25" Controls:TextBoxHelper.Watermark="Notes" Margin="215,10,10,1"></TextBox>
+                        <Button Grid.Row="0" x:Name="btnPedalUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="118,9,0,0" VerticalAlignment="Top" Width="103" Height="25" Background="White" BorderBrush="#FFCCCCCC" Click="btnPedalUpdate_Click"/>
+                        <TextBox Grid.Row="0" x:Name="txtPedalBuildQuantity" HorizontalAlignment="Left" Height="25" Margin="414,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" BorderBrush="#FFCCCCCC" Controls:TextBoxHelper.Watermark="Quantity To Build" Controls:TextBoxHelper.ClearTextButton="True"/>
+                        <Button Grid.Row="0" x:Name="btnAddPedalToOrder" Content="ADD PEDAL TO ORDER" HorizontalAlignment="Left" Margin="579,9,0,0" VerticalAlignment="Top" Width="176" Height="25" Background="White" Click="btnAddPedalToOrder_Click" BorderBrush="#FFCCCCCC"/>
+                        <TextBox x:Name="txtPedalName" Text="{Binding Path=SelectedValue.Name, ElementName=pedalDataGrid, Mode=OneWay}" Grid.Row="1" Controls:TextBoxHelper.Watermark="Name*" Margin="10,10,1095,1"/>
+                        <TextBox x:Name="txtPedalNotes" Text="{Binding Path=SelectedValue.Notes, ElementName=pedalDataGrid, Mode=OneWay}" Grid.Row="1" Height="25" Controls:TextBoxHelper.Watermark="Notes" Margin="215,10,10,1"></TextBox>
                         <DataGrid Grid.Row="2" x:Name="pedalDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" SelectionChanged="pedalDataGrid_SelectionChanged" CanUserAddRows="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="200" SortDirection="Ascending"/>
@@ -39,7 +39,8 @@
                                 <DataGridTextColumn x:Name="pedalIdColumn" Binding="{Binding PedalId}" Header="Pedal Id" Width="SizeToHeader" Visibility="Hidden"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button x:Name="btnDeletePedal" Content="DELETE PEDAL" HorizontalAlignment="Left" Margin="773,10,0,0" VerticalAlignment="Top" Width="114" Background="White" Click="btnDeletePedal_Click"/>
+                        <Button x:Name="btnDeletePedal" Content="DELETE PEDAL" HorizontalAlignment="Left" Margin="226,9,0,0" VerticalAlignment="Top" Width="114" Background="White" Click="btnDeletePedal_Click"/>
+                        <Button Grid.Row="0" x:Name="btnPedalNew" Content="NEW" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Width="103" Height="25" Background="White" BorderBrush="#FFCCCCCC" Click="btnPedalNew_Click"/>
 
                     </Grid>
                 </TabItem>
@@ -48,18 +49,25 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="37"></RowDefinition>
                             <RowDefinition Height="37"></RowDefinition>
+                            <RowDefinition Height="37"></RowDefinition>
                             <RowDefinition Height="627"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Button Grid.Row="0" x:Name="btnUpdateComponent" Content="UPDATE COMPONENTS" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="132" Height="13" BorderBrush="#FFCCCCCC" Background="White" Click="btnUpdateComponent_Click"/>
                         <Label Grid.Row="0" x:Name="lblPedalName" Content="Name" HorizontalAlignment="Left" Margin="849,10,0,0" VerticalAlignment="Top" Foreground="Black" Width="198"/>
                         <Label Grid.Row="0" x:Name="lblPedalCostStatic" Content="Cost" HorizontalAlignment="Left" Margin="1052,10,0,0" VerticalAlignment="Top" Foreground="Black"/>
                         <Label  Grid.Row="0" x:Name="lblPedalCost" Content="0.00" HorizontalAlignment="Left" Margin="1091,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,-0.865" Width="51" Foreground="Black" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="txtComponentType" Grid.Row="1" Controls:TextBoxHelper.Watermark="Type*" Width="75" Height="25" Margin="0,10,1231,1"></TextBox>
-                        <TextBox x:Name="txtComponentValue" Grid.Row="1" Controls:TextBoxHelper.Watermark="Value*" Width="100" Height="25" Margin="80,10,1126,1"/>
-                        <TextBox x:Name="txtComponentPrice" Grid.Row="1" Controls:TextBoxHelper.Watermark="Price" Width="60" Height="25" Margin="185,10,1061,1"></TextBox>
-                        <TextBox x:Name="txtComponentNotes" Grid.Row="1" Controls:TextBoxHelper.Watermark="Notes" Width="250" Height="25" Margin="250,10,806,1"></TextBox>
-                        <TextBox x:Name="txtComponentUrl" Grid.Row="1" Controls:TextBoxHelper.Watermark="Url" Height="25" Margin="505,10,480,1"></TextBox>
-                        <DataGrid Grid.Row="2" x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,480,12" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" MouseDoubleClick="componentDataGrid_MouseDoubleClick" IsReadOnly="True">
+                        <TextBox x:Name="txtPartName" Grid.Row="0" HorizontalAlignment="Left" Height="22" Margin="253,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121" BorderBrush="#FFCCCCCC" SpellCheck.IsEnabled="True" Controls:TextBoxHelper.Watermark="Part Name" Controls:TextBoxHelper.ClearTextButton="True" />
+                        <Button x:Name="btnAddComponentToPedal" Grid.Row="0" Content="ADD TO PEDAL" HorizontalAlignment="Left" Margin="379,10,0,0" VerticalAlignment="Top" Width="121" Height="25" Background="White" BorderBrush="#FFCCCCCC" Click="btnAddComponentToPedal_Click"/>
+                        <Button x:Name="btnDeletePart" Grid.Row="0" Content="DELETE PART" HorizontalAlignment="Left" Margin="1147,10,0,0" VerticalAlignment="Top" Width="84" Height="21" BorderBrush="#FFCCCCCC" Background="White" Click="btnDeletePart_Click"/>
+                        <TextBox x:Name="txtSearchComponents" Grid.Row="0" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="238" TextChanged="txtSearchComponents_TextChanged" BorderBrush="#FFCCCCCC" Controls:TextBoxHelper.Watermark="Search" Controls:TextBoxHelper.ClearTextButton="True"/>
+                        <Button x:Name="btnDeleteComponent" Content="DELETE" HorizontalAlignment="Left" Margin="284,10,0,0" VerticalAlignment="Top" Width="129" Background="White" Click="btnDeleteComponent_Click" Grid.Row="1"/>
+                        <Button Grid.Row="1" x:Name="btnNewComponent" Content="NEW" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="132" Height="13" BorderBrush="#FFCCCCCC" Background="White" Click="btnNewComponent_Click"/>
+                        <Button Grid.Row="1" x:Name="btnUpdateComponent" Content="UPDATE" HorizontalAlignment="Left" Margin="147,10,0,0" VerticalAlignment="Top" Width="132" Height="13" BorderBrush="#FFCCCCCC" Background="White" Click="btnUpdateComponent_Click"/>
+                        <TextBox x:Name="txtComponentType" Text="{Binding Path=SelectedValue.Type, ElementName=componentDataGrid, Mode=OneWay}" Grid.Row="2" Controls:TextBoxHelper.Watermark="Type*" Width="75" Height="25" Margin="10,10,1221,1"/>
+                        <TextBox x:Name="txtComponentValue" Text="{Binding Path=SelectedValue.Value, ElementName=componentDataGrid, Mode=OneWay}" Grid.Row="2" Controls:TextBoxHelper.Watermark="Value*" Width="100" Height="25" Margin="90,10,1116,1"/>
+                        <TextBox x:Name="txtComponentPrice" Text="{Binding Path=SelectedValue.Price, ElementName=componentDataGrid, Mode=OneWay}" Grid.Row="2" Controls:TextBoxHelper.Watermark="Price" Width="60" Height="25" Margin="195,10,1051,1"></TextBox>
+                        <TextBox x:Name="txtComponentNotes" Text="{Binding Path=SelectedValue.Notes, ElementName=componentDataGrid, Mode=OneWay}" Grid.Row="2" Controls:TextBoxHelper.Watermark="Notes" Width="250" Height="25" Margin="260,10,796,1"></TextBox>
+                        <TextBox x:Name="txtComponentUrl" Text="{Binding Path=SelectedValue.Url, ElementName=componentDataGrid, Mode=OneWay}" Grid.Row="2" Controls:TextBoxHelper.Watermark="Url" Height="25" Margin="515,10,480,1"></TextBox>
+                        <DataGrid Grid.Row="3" x:Name="componentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,480,12" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" MouseDoubleClick="componentDataGrid_MouseDoubleClick" IsReadOnly="True" SelectionChanged="componentDataGrid_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="componentIdColumn" Binding="{Binding ComponentId}" Header="Component Id" Width="SizeToHeader" Visibility="Hidden"/>
                                 <DataGridTextColumn x:Name="typeColumn" Binding="{Binding Type}" Header="Type" Width="75" SortDirection="Ascending"/>
@@ -69,7 +77,7 @@
                                 <DataGridTextColumn x:Name="urlColumn" Binding="{Binding Url}" Header="Url" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid Grid.Row="1" x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,10,75,12" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" Grid.RowSpan="2">
+                        <DataGrid Grid.Row="1" x:Name="partDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Path=SelectedValue.Parts, ElementName=pedalDataGrid}" Margin="849,10,75,49" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" Grid.RowSpan="3">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="component_ComponentIdColumn" Binding="{Binding Component_ComponentId}" Header="Component Component Id" Width="SizeToHeader" Visibility="Hidden"/>
                                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader" Visibility="Hidden"/>
@@ -78,11 +86,6 @@
                                 <DataGridTextColumn x:Name="partComponentValueColumn" Binding="{Binding Component.Value}" Header="Value" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TextBox x:Name="txtPartName" HorizontalAlignment="Left" Height="22" Margin="390,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121" BorderBrush="#FFCCCCCC" SpellCheck.IsEnabled="True" Controls:TextBoxHelper.Watermark="Part Name" Controls:TextBoxHelper.ClearTextButton="True" />
-                        <Button x:Name="btnAddComponentToPedal" Content="ADD TO PEDAL" HorizontalAlignment="Left" Margin="516,10,0,0" VerticalAlignment="Top" Width="121" Height="25" Background="White" BorderBrush="#FFCCCCCC" Click="btnAddComponentToPedal_Click"/>
-                        <Button x:Name="btnDeletePart" Content="DELETE PART" HorizontalAlignment="Left" Margin="1147,10,0,0" VerticalAlignment="Top" Width="84" Height="21" BorderBrush="#FFCCCCCC" Background="White" Click="btnDeletePart_Click"/>
-                        <TextBox x:Name="txtSearchComponents" HorizontalAlignment="Left" Height="22" Margin="147,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="238" TextChanged="txtSearchComponents_TextChanged" BorderBrush="#FFCCCCCC" Controls:TextBoxHelper.Watermark="Search" Controls:TextBoxHelper.ClearTextButton="True"/>
-                        <Button x:Name="btnDeleteComponent" Content="DELETE COMPONENT" HorizontalAlignment="Left" Margin="697,10,0,0" VerticalAlignment="Top" Width="129" Background="White" Click="btnDeleteComponent_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Order" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="89" Margin="0,0,-34,0" Background="#00000000">

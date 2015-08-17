@@ -24,7 +24,7 @@ namespace PedalBuilder
 
         private PedalContext _context = new PedalContext();
         private decimal _pedalCost = new decimal(0.00);
-        private Component _selectedComponent = new Component();
+        private Component _selectedComponent;
         private OrderItem _orderItem;
         private Order order = new Order();
         private Pedal _selectedPedal;
@@ -88,16 +88,15 @@ namespace PedalBuilder
             var name = txtPedalName.Text;
             var notes = txtPedalNotes.Text;
 
-            if (name.Length > 0)
+            if (name.Length > 0 && _selectedPedal != null)
             {
-                Pedal newPedal = new Pedal();
-                newPedal.Name = name;
-                newPedal.Notes = notes;
-                _context.Pedals.Add(newPedal);
+                var updatedPedal = _context.Pedals.Find(_selectedPedal.PedalId);
+                updatedPedal.Name = name;
+                updatedPedal.Notes = notes;
                 var changed = _context.SaveChanges();
                 pedalDataGrid.Items.Refresh();
                 Status = "";
-                Status = changed + " pedals changed.";
+                Status = updatedPedal.Name + " changed.";
             }
         }
 
@@ -116,19 +115,20 @@ namespace PedalBuilder
             var notes = txtComponentNotes.Text;
             var url = txtComponentUrl.Text;
 
-            if (type.Length > 0 && value.Length > 0)
+            price.TrimEnd('0');
+
+            if (type.Length > 0 && value.Length > 0 && _selectedComponent != null)
             {
-                Component newComponent = new Component();
-                newComponent.Type = type;
-                newComponent.Value = value;
-                newComponent.Price = Convert.ToDecimal(price);
-                newComponent.Notes = notes;
-                newComponent.Url = url;
-                _context.Components.Add(newComponent);
+                var updatedComponent = _context.Components.Find(_selectedComponent.ComponentId);
+                updatedComponent.Type = type;
+                updatedComponent.Value = value;
+                updatedComponent.Price = Convert.ToDecimal(price);
+                updatedComponent.Notes = notes;
+                updatedComponent.Url = url;
                 var changed = _context.SaveChanges();
                 componentDataGrid.Items.Refresh();
                 Status = "";
-                Status = changed + " components changed.";
+                Status = "(" + updatedComponent.Type + ", " + updatedComponent.Value + ") changed.";
             }
             
         }
@@ -141,9 +141,9 @@ namespace PedalBuilder
         /// <param name="e"></param>
         private void pedalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (pedalDataGrid.SelectedValue != null && pedalDataGrid.SelectedValue.ToString() != "{NewItemPlaceholder}")
+            if (pedalDataGrid.SelectedValue != null)
             {
-                _selectedPedal = (Pedal)(pedalDataGrid.SelectedValue);
+                _selectedPedal = (Pedal)(pedalDataGrid.SelectedItem);
                 lblPedalName.Content = _selectedPedal.Name;
 
                 updatePedalCost();
@@ -164,7 +164,7 @@ namespace PedalBuilder
         /// <param name="e"></param>
         private void btnAddComponentToPedal_Click(object sender, RoutedEventArgs e)
         {
-            if (componentDataGrid.SelectedValue != null && componentDataGrid.SelectedValue.ToString() != "{NewItemPlaceholder}" && _selectedPedal != null && txtPartName.Text.Length > 0)
+            if (componentDataGrid.SelectedValue != null && _selectedPedal != null && txtPartName.Text.Length > 0)
             {
                 _selectedComponent = (Component)(componentDataGrid.SelectedItem);
                 Part part = new Part();
@@ -465,6 +465,56 @@ namespace PedalBuilder
             {
                 Status = "";
                 Status = "Error: component not deleted.";
+            }
+        }
+
+        private void btnPedalNew_Click(object sender, RoutedEventArgs e)
+        {
+            var name = txtPedalName.Text;
+            var notes = txtPedalNotes.Text;
+
+            if (name.Length > 0)
+            {
+                Pedal newPedal = new Pedal();
+                newPedal.Name = name;
+                newPedal.Notes = notes;
+                _context.Pedals.Add(newPedal);
+                var changed = _context.SaveChanges();
+                pedalDataGrid.Items.Refresh();
+                Status = "";
+                Status = newPedal.Name + " added.";
+            }
+        }
+
+        private void btnNewComponent_Click(object sender, RoutedEventArgs e)
+        {
+            var type = txtComponentType.Text;
+            var value = txtComponentValue.Text;
+            var price = txtComponentPrice.Text.Length > 0 ? txtComponentPrice.Text : @"0.00";
+            var notes = txtComponentNotes.Text;
+            var url = txtComponentUrl.Text;
+
+            if (type.Length > 0 && value.Length > 0)
+            {
+                Component newComponent = new Component();
+                newComponent.Type = type;
+                newComponent.Value = value;
+                newComponent.Price = Convert.ToDecimal(price);
+                newComponent.Notes = notes;
+                newComponent.Url = url;
+                _context.Components.Add(newComponent);
+                var changed = _context.SaveChanges();
+                componentDataGrid.Items.Refresh();
+                Status = "";
+                Status = "(" + newComponent.Type + ", " + newComponent.Value + ") added.";
+            }
+        }
+
+        private void componentDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (componentDataGrid.SelectedValue != null)
+            {
+                _selectedComponent = (Component)(componentDataGrid.SelectedItem);
             }
         }
     }
