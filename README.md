@@ -5,6 +5,8 @@ Pedal Builder 2.0.0
 
 DIY guitar pedals are fun to build and use.  I found that I would often miss some components when placing an order, and I didn't have a nice way to organize the components I needed to order if I was building multiple pedals, so I built Pedal Builder.
 
+Blog post [here](http://robotabot.github.io/articles/pedal-builder/)
+
 The first version used WinForms and SQLite, while this version is built with WPF and SQL Server CE.  Version 2 also makes use of [Mahapps.Metro](http://mahapps.com/) for UI styling and behavior.
 
 ####Features####
